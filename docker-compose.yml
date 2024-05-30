@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  database:
+    extends:
+      file: database/docker-compose.yml
+      service: postgres
+
+volumes:
+  postgres_data:
