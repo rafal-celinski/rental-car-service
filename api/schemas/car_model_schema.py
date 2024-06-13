@@ -1,11 +1,14 @@
 from pydantic import BaseModel
 
 class CarModelCreate(BaseModel):
-    name: str
+    model_name: str
+    brand_name: str
+    segment_name: str
 
 class CarModel(BaseModel):
-    id: int
-    name: str
+    model_name: str
+    brand_name: str
+    segment_name: str
 
     class Config:
         from_attributes = True
