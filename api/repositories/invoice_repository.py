@@ -19,3 +19,7 @@ class InvoiceRepository:
     @staticmethod
     def get_all(db: Session):
         return db.query(Invoice).all()
+
+    @staticmethod
+    def get_latest(db: Session, client_id: int):
+        return db.query(Invoice).filter(Invoice.client_id == client_id).order_by(Invoice.id.desc()).first()
