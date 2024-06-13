@@ -25,4 +25,4 @@ class Car(BaseModel):
     is_rented: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
