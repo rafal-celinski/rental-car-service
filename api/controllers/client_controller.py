@@ -6,6 +6,7 @@ from api.config import get_db
 
 router = APIRouter()
 
+
 @router.post("/clients/", response_model=Client)
 def create_client(client: ClientCreate, db: Session = Depends(get_db)):
     db_client = ClientRepository.create(db, client)

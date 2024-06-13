@@ -4,3 +4,6 @@ from .rental_controller import router as rental_router
 from .price_controller import router as price_router
 from .report_controller import router as report_router
 from .invoice_controller import router as invoice_router
+from .brand_controller import router as brand_router
+from .model_controller import router as model_router
+from .segment_controller import router as segment_router

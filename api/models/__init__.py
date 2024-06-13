@@ -4,3 +4,6 @@ from .rental import Rental
 from .price_list import PriceList
 from .invoice import Invoice
 from .invoice_element import InvoiceElement
+from .car_model import CarModel
+from .brand import Brand
+from .segment import Segment

@@ -8,7 +8,15 @@ router = APIRouter()
 
 @router.post("/invoices/", response_model=Invoice)
 def generate_invoice(invoice: InvoiceCreate, db: Session = Depends(get_db)):
-    db_invoice = InvoiceRepository.create(db, invoice)
-    if db_invoice is None:
-        raise HTTPException(status_code=400, detail="Invoice could not be created")
-    return db_invoice
+    try:
+        db.execute("CALL create_invoice(:client_id, :start_date, :end_date)", {
+            'client_id': invoice.client_id,
+            'start_date': invoice.start_date,
+            'end_date': invoice.end_date
+        })
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return InvoiceRepository.get_latest(db, invoice.client_id)

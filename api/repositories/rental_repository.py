@@ -29,3 +29,7 @@ class RentalRepository:
         db_rental = db.query(Rental).filter(Rental.id == rental_id).first()
         db.delete(db_rental)
         db.commit()
+
+    @staticmethod
+    def get_latest(db: Session, client_id: int, car_id: int):
+        return db.query(Rental).filter(Rental.client_id == client_id, Rental.car_id == car_id).order_by(Rental.id.desc()).first()
