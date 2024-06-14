@@ -5,10 +5,8 @@ class SegmentCreate(BaseModel):
     description: str
 
 class Segment(BaseModel):
-    id: int
     name: str
     description: str
 
     class Config:
-        from_attributes = True
-        protected_namespaces = ()
+        orm_mode = True
