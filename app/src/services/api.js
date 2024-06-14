@@ -14,4 +14,4 @@ export const rentCar = (rentalData) => axios.post(`${API_URL}/rentals/`, rentalD
 export const returnCar = (rentalId) => axios.post(`${API_URL}/rentals/${rentalId}/return`);
 export const getReports = (reportType, params) => axios.get(`${API_URL}/reports/${reportType}`, { params });
 export const getAvailableModels = () => axios.get(`${API_URL}/models/`);
-export const getImage = (filename) => axios.get(`${API_URL}/images/${filename}/`);
+export const getImage = (filename) => axios.get(`${API_URL}/images/${filename}`);

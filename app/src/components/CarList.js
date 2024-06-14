@@ -26,7 +26,7 @@ const CarList = () => {
       {cars.map((car) => (
         <div key={car.id}>
           <h2>{car.model_name} ({car.brand_name})</h2>
-          <img src={car.photo_url} alt={`${car.model_name} image`} />
+          <img src={car.photo} alt={`${car.model_name} image`} />
           <p>Segment: {car.segment_name}</p>
           <p>Production Date: {car.production_date}</p>
           <p>Mileage: {car.mileage}</p>

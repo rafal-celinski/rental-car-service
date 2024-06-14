@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
-from fastapi.respones import FileResponse
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
@@ -47,9 +47,6 @@ def create_car(
     db.commit()
     db.refresh(db_car)
 
-    # Create the photo URL
-    photo_url = f"http://localhost:8000/api/images/{photo.filename}"
-
     # Explicitly convert photo to string in the response
     response_car = Car(
         id=db_car.id,
@@ -60,7 +57,7 @@ def create_car(
         mileage=db_car.mileage,
         license_plate=db_car.license_plate,
         vin=db_car.vin,
-        photo_url=photo_url,
+        photo=f"http://localhost:8000/api/images/{photo.filename}",
         is_rented=db_car.is_rented
     )
     return response_car
