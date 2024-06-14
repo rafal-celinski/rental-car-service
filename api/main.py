@@ -1,9 +1,27 @@
 from fastapi import FastAPI
-from api.controllers import client_router, car_router, rental_router, price_router, report_router, invoice_router, brand_router, model_router, segment_router
+from fastapi.middleware.cors import CORSMiddleware
+from api.controllers.client_controller import router as client_router
+from api.controllers.car_controller import router as car_router
+from api.controllers.rental_controller import router as rental_router
+from api.controllers.price_controller import router as price_router
+from api.controllers.report_controller import router as report_router
+from api.controllers.invoice_controller import router as invoice_router
+from api.controllers.brand_controller import router as brand_router
+from api.controllers.model_controller import router as model_router
+from api.controllers.segment_controller import router as segment_router
 from api.config import engine
 from api.models import client, car, rental, price_list, invoice, invoice_element, brand, car_model, segment
 
 app = FastAPI()
+
+# Set up CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins, you can specify specific origins here
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 client.Base.metadata.create_all(bind=engine)
 car.Base.metadata.create_all(bind=engine)

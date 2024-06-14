@@ -11,5 +11,5 @@ class CarModel(BaseModel):
     segment_name: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
         protected_namespaces = ()
