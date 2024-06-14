@@ -20,3 +20,6 @@ export const getImage = (filename) => axios.get(`${API_URL}/images/${filename}`)
 export const getRentalsByClient = (clientId) => { return axios.get(`${API_URL}/rentals/client/${clientId}`);};
 export const endRental = (rentalId) => { return axios.post(`${API_URL}/rentals/${rentalId}/return`);};
 export const returnRental = async (rentalId) => { return await axios.post(`${API_BASE_URL}/rentals/${rentalId}/return`);};
+export const generateInvoice = (invoiceData) => axios.post(`${API_URL}/invoices/`, invoiceData);
+export const getInvoicesByClient = (clientId) => axios.get(`${API_URL}/invoices/client/${clientId}`);
+export const getInvoiceElements = (invoiceId) => axios.get(`${API_URL}/invoices/${invoiceId}/elements`);

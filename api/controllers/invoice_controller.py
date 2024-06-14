@@ -1,15 +1,17 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from api.schemas.invoice_schema import Invoice, InvoiceCreate
+from api.schemas.invoice_schema import Invoice, InvoiceCreate, InvoiceElement
 from api.repositories.invoice_repository import InvoiceRepository
 from api.config import get_db
+from typing import List
+from sqlalchemy import text
 
 router = APIRouter()
 
 @router.post("/invoices/", response_model=Invoice)
 def generate_invoice(invoice: InvoiceCreate, db: Session = Depends(get_db)):
     try:
-        db.execute("CALL create_invoice(:client_id, :start_date, :end_date)", {
+        db.execute(text("CALL create_invoice(:client_id, :start_date, :end_date)"), {
             'client_id': invoice.client_id,
             'start_date': invoice.start_date,
             'end_date': invoice.end_date
@@ -20,3 +22,15 @@ def generate_invoice(invoice: InvoiceCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
     return InvoiceRepository.get_latest(db, invoice.client_id)
+
+
+@router.get("/invoices/client/{client_id}", response_model=List[Invoice])
+def get_invoices_by_client(client_id: int, db: Session = Depends(get_db)):
+    return InvoiceRepository.get_all_by_client(db, client_id)
+
+@router.get("/invoices/{invoice_id}/elements", response_model=List[InvoiceElement])
+def get_invoice_elements(invoice_id: int, db: Session = Depends(get_db)):
+    elements = InvoiceRepository.get_invoice_elements_with_car_details(db, invoice_id)
+    if not elements:
+        raise HTTPException(status_code=404, detail="Invoice elements not found")
+    return elements

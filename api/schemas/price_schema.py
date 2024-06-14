@@ -17,4 +17,4 @@ class Price(BaseModel):
     price: float
 
     class Config:
-        from_attributes = True
+        orm_mode = True

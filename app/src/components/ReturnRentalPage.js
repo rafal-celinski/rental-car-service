@@ -60,7 +60,7 @@ const ReturnRentalPage = () => {
     try {
       await endRental(rentalId);
       alert('Rental ended successfully');
-      navigate('/car-list'); // Navigate back to car list after successful return
+      navigate('/car-list');
     } catch (error) {
       console.error('Error ending rental:', error);
       alert('Failed to end rental');

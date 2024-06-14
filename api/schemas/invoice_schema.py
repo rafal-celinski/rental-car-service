@@ -1,10 +1,25 @@
 from pydantic import BaseModel
 from datetime import date
+from typing import List, Optional
 
-class InvoiceCreate(BaseModel):
-    client_id: int
-    start_date: date
-    end_date: date
+class Car(BaseModel):
+    id: int
+    model_name: str
+    brand_name: str
+
+    class Config:
+        orm_mode = True
+
+
+class InvoiceElement(BaseModel):
+    invoice_id: int
+    rental_id: int
+    element_number: int
+    price: float
+    car: Car
+ 
+    class Config:
+        orm_mode = True
 
 class Invoice(BaseModel):
     id: int
@@ -14,4 +29,9 @@ class Invoice(BaseModel):
     tax: float
 
     class Config:
-        from_attributes = True
+        orm_mode = True
+
+class InvoiceCreate(BaseModel):
+    client_id: int
+    start_date: date
+    end_date: date

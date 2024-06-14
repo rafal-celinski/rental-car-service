@@ -4,12 +4,11 @@ from api.config import Base
 
 
 class Invoice(Base):
-    __tablename__ = 'invoice'
-
+    __tablename__ = "invoice"
     id = Column(Integer, primary_key=True, index=True)
-    client_id = Column(Integer, nullable=False)
-    date = Column(Date, nullable=False)
-    price_sum_netto = Column(Numeric, nullable=False, default=0)
-    tax = Column(Numeric, nullable=False, default=0)
-
-    invoice_elements = relationship("InvoiceElement", back_populates="invoice")
+    client_id = Column(Integer, ForeignKey('client.id'))
+    date = Column(Date)
+    price_sum_netto = Column(Numeric)
+    tax = Column(Numeric)
+    
+    elements = relationship("InvoiceElement", back_populates="invoice")
