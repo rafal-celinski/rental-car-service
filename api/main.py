@@ -14,13 +14,18 @@ from api.models import client, car, rental, price_list, invoice, invoice_element
 
 app = FastAPI()
 
-# Set up CORS middleware
+# Configure CORS
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins, you can specify specific origins here
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 client.Base.metadata.create_all(bind=engine)

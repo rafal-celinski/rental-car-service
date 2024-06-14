@@ -15,6 +15,11 @@ router = APIRouter()
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+def remove_bom(text):
+    if text.startswith('\ufeff'):
+        return text.replace('\ufeff', '')
+    return text
+
 @router.post("/cars/", response_model=Car)
 def create_car(
     model_name: str = Form(...),
@@ -31,6 +36,8 @@ def create_car(
     photo_path = os.path.join(UPLOAD_DIR, photo.filename)
     with open(photo_path, "wb") as buffer:
         shutil.copyfileobj(photo.file, buffer)
+
+    photo_filename = photo.filename.encode('utf-8').decode('utf-8') 
     
     db_car = CarModel(
         model_name=model_name,
@@ -40,7 +47,7 @@ def create_car(
         mileage=mileage,
         license_plate=license_plate,
         vin=vin,
-        photo=photo.filename,  # Store the filename
+        photo=photo_filename,  # Store the filename
         is_rented=False
     )
     db.add(db_car)
@@ -63,8 +70,32 @@ def create_car(
     return response_car
 
 @router.get("/cars/", response_model=List[Car])
-def get_all_cars(db: Session = Depends(get_db)):
-    return CarRepository.get_all(db)
+def get_cars(db: Session = Depends(get_db)):
+    cars = db.query(CarModel).all()
+    response_cars = []
+    for car in cars:
+         # Handle the photo filename
+        photo_filename = car.photo.tobytes().decode('utf-8') if isinstance(car.photo, memoryview) else car.photo
+        
+        # Remove BOM if present
+        photo_filename = remove_bom(photo_filename) if photo_filename else ""
+        
+        photo_url = f"http://localhost:8000/api/images/{photo_filename}" if photo_filename else ""
+        
+        response_car = Car(
+            id=car.id,
+            model_name=car.model_name,
+            brand_name=car.brand_name,
+            segment_name=car.segment_name,
+            production_date=car.production_date,
+            mileage=car.mileage,
+            license_plate=car.license_plate,
+            vin=car.vin,
+            photo=str(photo_url),  # Explicitly ensure this is a string
+            is_rented=car.is_rented
+        )
+        response_cars.append(response_car)
+    return response_cars
 
 @router.get("/cars/{car_id}", response_model=Car)
 def get_car(car_id: int, db: Session = Depends(get_db)):

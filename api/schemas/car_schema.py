@@ -21,7 +21,7 @@ class Car(BaseModel):
     mileage: int
     license_plate: str
     vin: str
-    photo: Optional[str] = None
+    photo: str = None
     is_rented: bool
 
     class Config:

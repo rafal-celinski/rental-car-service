@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api'; // Replace with your backend URL
 
 export const registerClient = (clientData) => axios.post(`${API_URL}/clients`, clientData);
+export const getAllClients = () => axios.get(`${API_URL}/clients/`);
 export const getCars = () => axios.get(`${API_URL}/cars/`);
 export const getCarDetails = (carId) => axios.get(`${API_URL}/cars/${carId}`);
 export const addCar = (carData) => axios.post(`${API_URL}/cars/`, carData, {
