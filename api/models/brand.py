@@ -4,8 +4,7 @@ from api.config import Base
 
 class Brand(Base):
     __tablename__ = 'brand'
-    
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String, primary_key=True)
+    logo = Column(String, nullable=True)
 
     models = relationship("CarModel", back_populates="brand")

@@ -1,12 +1,12 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class BrandCreate(BaseModel):
     name: str
 
 class Brand(BaseModel):
-    id: int
     name: str
+    logo: Optional[str]
 
     class Config:
-        from_attributes = True
-        protected_namespaces = ()
+        orm_mode = True
