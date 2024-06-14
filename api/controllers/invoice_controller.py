@@ -19,6 +19,8 @@ def generate_invoice(invoice: InvoiceCreate, db: Session = Depends(get_db)):
         db.commit()
     except Exception as e:
         db.rollback()
+        if 'Total price for invoice must be greater than zero' in str(e):
+            raise HTTPException(status_code=400, detail="No rentals found in the specified date window.")
         raise HTTPException(status_code=400, detail=str(e))
 
     return InvoiceRepository.get_latest(db, invoice.client_id)

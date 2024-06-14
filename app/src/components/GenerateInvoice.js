@@ -1,61 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// In src/components/GenerateInvoice.js
+
+import React, { useState } from 'react';
 import { generateInvoice, getAllClients } from '../services/api';
 
-const GenerateInvoicePage = () => {
+const GenerateInvoice = () => {
   const [clientType, setClientType] = useState('person'); // 'person' or 'company'
   const [clientIdentifier, setClientIdentifier] = useState(''); // PESEL or NIP based on clientType
-  const [clients, setClients] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await getAllClients();
-        setClients(response.data);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      }
-    };
-
-    fetchClients();
-  }, []);
-
-  const handleSubmit = async (e) => {
+  const handleGenerateInvoice = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
     let client;
-    if (clientType === 'person') {
-      client = clients.find(c => c.pesel === clientIdentifier);
-    } else {
-      client = clients.find(c => c.nip === clientIdentifier);
-    }
-
-    if (!client) {
-      alert('Client not found');
-      return;
-    }
-
     try {
+      const clients = await getAllClients();
+      if (clientType === 'person') {
+        client = clients.data.find(c => c.pesel === clientIdentifier);
+      } else {
+        client = clients.data.find(c => c.nip === clientIdentifier);
+      }
+
+      if (!client) {
+        setError('Client not found');
+        return;
+      }
+
       const invoiceData = {
         client_id: client.id,
         start_date: startDate,
         end_date: endDate,
       };
       await generateInvoice(invoiceData);
-      alert('Invoice generated successfully');
-      navigate('/invoices');
-    } catch (error) {
-      console.error('Error generating invoice:', error);
-      alert('Failed to generate invoice');
+      setSuccess('Invoice generated successfully.');
+    } catch (err) {
+      if (err.response && err.response.data.detail === "No rentals found in the specified date window.") {
+        setError('No rentals found in the specified date window.');
+      } else {
+        setError('Failed to generate invoice');
+      }
     }
   };
 
   return (
     <div>
       <h2>Generate Invoice</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleGenerateInvoice}>
         <div>
           <label>Client Type:</label>
           <select value={clientType} onChange={(e) => setClientType(e.target.value)}>
@@ -89,8 +82,10 @@ const GenerateInvoicePage = () => {
         </div>
         <button type="submit">Generate Invoice</button>
       </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
     </div>
   );
 };
 
-export default GenerateInvoicePage;
+export default GenerateInvoice;

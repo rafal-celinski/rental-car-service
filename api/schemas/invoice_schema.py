@@ -25,8 +25,8 @@ class Invoice(BaseModel):
     id: int
     client_id: int
     date: date
-    price_sum_netto: float
-    tax: float
+    price_sum_netto: Optional[float]
+    tax: Optional[float]
 
     class Config:
         orm_mode = True
