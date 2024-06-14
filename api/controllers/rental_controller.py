@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 from sqlalchemy.exc import SQLAlchemyError
-import psycopg2.errors
 from api.schemas.rental_schema import Rental, RentalCreate
 from api.repositories.rental_repository import RentalRepository
 from api.config import get_db
@@ -25,7 +24,8 @@ def rent_car(rental: RentalCreate, db: Session = Depends(get_db)):
             price = new_rental.price,
             active = new_rental.active,
             car_id = new_rental.car_id,
-            client_id = new_rental.client_id
+            client_id = new_rental.client_id,
+            end_date = new_rental.end_date
         )
         return response
     except SQLAlchemyError as e:
