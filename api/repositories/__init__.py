@@ -5,5 +5,5 @@ from .price_repository import PriceRepository
 from .invoice_repository import InvoiceRepository
 from .invoice_element_repository import InvoiceElementRepository
 from .brand_repository import BrandRepository
-from .car_model_repository import CarModelRepository
+from .model_repository import CarModelRepository
 from .segment_repository import SegmentRepository
