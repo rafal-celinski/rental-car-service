@@ -1,29 +1,35 @@
 from sqlalchemy.orm import Session
-from api.models.price_list import PriceList
+from api.models.price_list import Price
 from api.schemas.price_schema import PriceCreate, PriceUpdate
 
 class PriceRepository:
+    @staticmethod
+    def get(db: Session, model_name: str, brand_name: str):
+        return db.query(Price).filter(Price.model_name == model_name, Price.brand_name == brand_name).first()
 
     @staticmethod
     def create(db: Session, price: PriceCreate):
-        db_price = PriceList(**price.dict())
+        db_price = Price(**price.dict())
         db.add(db_price)
         db.commit()
         db.refresh(db_price)
         return db_price
 
     @staticmethod
-    def update(db: Session, db_price: PriceList, price_update: PriceUpdate):
-        for key, value in price_update.dict().items():
-            setattr(db_price, key, value)
+    def update(db: Session, db_price: Price, price_update: PriceUpdate):
+        db_price.price = price_update.price
         db.commit()
         db.refresh(db_price)
         return db_price
 
     @staticmethod
-    def get(db: Session, price_id: int):
-        return db.query(PriceList).filter(PriceList.id == price_id).first()
+    def delete(db: Session, model_name: str, brand_name: str):
+        db_price = db.query(Price).filter(Price.model_name == model_name, Price.brand_name == brand_name).first()
+        if db_price:
+            db.delete(db_price)
+            db.commit()
+        return db_price
 
     @staticmethod
     def get_all(db: Session):
-        return db.query(PriceList).all()
+        return db.query(Price).all()

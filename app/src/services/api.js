@@ -17,9 +17,13 @@ export const returnCar = (rentalId) => axios.post(`${API_URL}/rentals/${rentalId
 export const getReports = (reportType, params) => axios.get(`${API_URL}/reports/${reportType}/`, { params });
 export const getAvailableModels = () => axios.get(`${API_URL}/models/`);
 export const getImage = (filename) => axios.get(`${API_URL}/images/${filename}`);
-export const getRentalsByClient = (clientId) => { return axios.get(`${API_URL}/rentals/client/${clientId}`);};
-export const endRental = (rentalId) => { return axios.post(`${API_URL}/rentals/${rentalId}/return`);};
-export const returnRental = async (rentalId) => { return await axios.post(`${API_BASE_URL}/rentals/${rentalId}/return`);};
+export const getRentalsByClient = (clientId) => axios.get(`${API_URL}/rentals/client/${clientId}`);
+export const endRental = (rentalId) => axios.post(`${API_URL}/rentals/${rentalId}/return`);
+export const returnRental = async (rentalId) => axios.post(`${API_URL}/rentals/${rentalId}/return`);
 export const generateInvoice = (invoiceData) => axios.post(`${API_URL}/invoices/`, invoiceData);
 export const getInvoicesByClient = (clientId) => axios.get(`${API_URL}/invoices/client/${clientId}`);
 export const getInvoiceElements = (invoiceId) => axios.get(`${API_URL}/invoices/${invoiceId}/elements`);
+export const createClient = (clientData) => axios.post(`${API_URL}/clients/`, clientData);
+export const createOrUpdatePrice = (priceData) => axios.post(`${API_URL}/prices/`, priceData);
+export const deletePrice = (model_name, brand_name) => axios.delete(`${API_URL}/prices/${model_name}/${brand_name}`);
+export const getAllPrices = () => axios.get(`${API_URL}/prices/`);

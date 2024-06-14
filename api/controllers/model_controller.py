@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from api.schemas.model_schema import CarModel, CarModelCreate
+from api.schemas.model_schema import CarModel as CarModelSchema, CarModelCreate
 from api.repositories.model_repository import CarModelRepository
 from api.config import get_db
 

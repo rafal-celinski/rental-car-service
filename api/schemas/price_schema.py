@@ -1,20 +1,16 @@
 from pydantic import BaseModel
 
-class PriceCreate(BaseModel):
+class PriceBase(BaseModel):
     model_name: str
     brand_name: str
     price: float
 
-class PriceUpdate(BaseModel):
-    model_name: str
-    brand_name: str
-    price: float
+class PriceCreate(PriceBase):
+    pass
 
-class Price(BaseModel):
-    id: int
-    model_name: str
-    brand_name: str
-    price: float
+class PriceUpdate(PriceBase):
+    pass
 
+class Price(PriceBase):
     class Config:
         orm_mode = True
