@@ -74,10 +74,7 @@ def get_cars(db: Session = Depends(get_db)):
     cars = db.query(CarModel).all()
     response_cars = []
     for car in cars:
-         # Handle the photo filename
         photo_filename = car.photo.tobytes().decode('utf-8') if isinstance(car.photo, memoryview) else car.photo
-        
-        # Remove BOM if present
         photo_filename = remove_bom(photo_filename) if photo_filename else ""
         
         photo_url = f"http://localhost:8000/api/images/{photo_filename}" if photo_filename else ""
@@ -91,7 +88,7 @@ def get_cars(db: Session = Depends(get_db)):
             mileage=car.mileage,
             license_plate=car.license_plate,
             vin=car.vin,
-            photo=str(photo_url),  # Explicitly ensure this is a string
+            photo=str(photo_url),  
             is_rented=car.is_rented
         )
         response_cars.append(response_car)

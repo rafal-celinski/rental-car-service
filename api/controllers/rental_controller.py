@@ -5,6 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from api.schemas.rental_schema import Rental, RentalCreate
 from api.repositories.rental_repository import RentalRepository
 from api.config import get_db
+from typing import List
 
 router = APIRouter()
 
@@ -47,3 +48,7 @@ def return_car(rental_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
     return RentalRepository.get(db, rental_id)
+
+@router.get("/rentals/client/{client_id}", response_model=List[Rental])
+def get_rentals_by_client(client_id: int, db: Session = Depends(get_db)):
+    return RentalRepository.get_rentals_by_client(db, client_id)

@@ -33,3 +33,7 @@ class RentalRepository:
     @staticmethod
     def get_latest(db: Session, client_id: int, car_id: int):
         return db.query(Rental).filter(Rental.client_id == client_id, Rental.car_id == car_id).order_by(Rental.id.desc()).first()
+    
+    @staticmethod
+    def get_rentals_by_client(db: Session, client_id: int):
+        return db.query(Rental).filter(Rental.client_id == client_id, Rental.active == True).all()

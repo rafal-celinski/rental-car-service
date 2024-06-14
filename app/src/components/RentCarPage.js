@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { rentCar, getAllClients } from '../services/api';
 
 const RentCarPage = () => {
   const { carId } = useParams();
+  const navigate = useNavigate();
   const [estimatedEndDate, setEstimatedEndDate] = useState('');
   const [clientType, setClientType] = useState('person'); // 'person' or 'company'
   const [clientIdentifier, setClientIdentifier] = useState(''); // PESEL or NIP based on clientType
   const [clients, setClients] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -25,8 +25,6 @@ const RentCarPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(''); // Clear previous error message
-
     let client;
     if (clientType === 'person') {
       client = clients.find(c => c.pesel === clientIdentifier);
@@ -35,7 +33,7 @@ const RentCarPage = () => {
     }
 
     if (!client) {
-      setErrorMessage('Client not found');
+      alert('Client not found');
       return;
     }
 
@@ -47,20 +45,16 @@ const RentCarPage = () => {
       };
       await rentCar(rentalData);
       alert('Car rented successfully');
+      navigate('/car-list'); // Navigate back to CarList after successful rental
     } catch (error) {
       console.error('Error renting car:', error);
-      if (error.response && error.response.data && error.response.data.detail) {
-        setErrorMessage(error.response.data.detail);
-      } else {
-        setErrorMessage('Failed to rent car');
-      }
+      alert('Failed to rent car');
     }
   };
 
   return (
     <div>
       <h2>Rent Car</h2>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Client Type:</label>
