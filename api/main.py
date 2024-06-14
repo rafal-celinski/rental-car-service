@@ -10,7 +10,7 @@ from api.controllers.brand_controller import router as brand_router
 from api.controllers.model_controller import router as model_router
 from api.controllers.segment_controller import router as segment_router
 from api.config import engine
-from api.models import client, car, rental, price_list, invoice, invoice_element, brand, car_model, segment
+from api.models import client, car, rental, price_list, invoice, invoice_element, brand, model, segment
 
 app = FastAPI()
 
@@ -35,7 +35,7 @@ price_list.Base.metadata.create_all(bind=engine)
 invoice.Base.metadata.create_all(bind=engine)
 invoice_element.Base.metadata.create_all(bind=engine)
 brand.Base.metadata.create_all(bind=engine)
-car_model.Base.metadata.create_all(bind=engine)
+model.Base.metadata.create_all(bind=engine)
 segment.Base.metadata.create_all(bind=engine)
 
 app.include_router(client_router, prefix="/api")
