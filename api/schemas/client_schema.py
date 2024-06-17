@@ -18,3 +18,8 @@ class Client(BaseModel):
 
     class Config:
         orm_mode = True
+
+class ClientUpdate(BaseModel):
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    address: Optional[str] = None

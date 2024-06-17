@@ -9,9 +9,9 @@ import ReturnRentalPage from './components/ReturnRentalPage';
 import Reports from './components/Reports';
 import ClientInvoices from './components/ClientInvoices';
 import GenerateInvoice from './components/GenerateInvoice';
-import ClientAdd from './components/ClientAdd';
 import PriceManager from './components/PriceManager';
 import { MonthlyReportPage, YearlyReportPage } from './components/ReportPage';
+import ClientManagement from './components/ClientManagementPage';
 
 const App = () => {
   return (
@@ -25,10 +25,10 @@ const App = () => {
             <li><Link to="/reports">Reports</Link></li>
             <li><Link to="/client-invoices/:clientId">Client Invoices</Link></li>
             <li><Link to="/generate-invoice">Generate Invoice</Link></li>
-            <li><Link to="/add-client">Add Client</Link></li>
             <li><Link to="/manage-prices">Manage Prices</Link></li>
             <li><Link to="/monthly-report">Monthly Report</Link></li>
             <li><Link to="/yearly-report">Yearly Report</Link></li>
+            <li><Link to="/client-management">Client Management</Link></li>
           </ul>
         </nav>
         <Routes>
@@ -39,10 +39,10 @@ const App = () => {
           <Route path="/reports" element={<Reports />} />
           <Route path="/client-invoices/:clientId" element={<ClientInvoices />} />
           <Route path="/generate-invoice" element={<GenerateInvoice />} />
-          <Route path="/add-client" element={<ClientAdd />} />
           <Route path="/manage-prices" element={<PriceManager />} />
           <Route path="/monthly-report" element={<MonthlyReportPage />} />
           <Route path="/yearly-report" element={<YearlyReportPage />} />
+          <Route path="/client-management" element={<ClientManagement />} />
         </Routes>
       </div>
     </Router>

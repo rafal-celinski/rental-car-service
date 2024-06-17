@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from api.models.client import Person, Company, Client
-from api.schemas.client_schema import Client as ClientSchema, ClientCreate
+from api.schemas.client_schema import Client as ClientSchema, ClientCreate, ClientUpdate
 
 class ClientRepository:
 
@@ -67,3 +67,40 @@ class ClientRepository:
         db.commit()
         db.refresh(new_company)
         return new_company
+    
+    @staticmethod
+    def update(db: Session, db_client, client_update:ClientUpdate):
+        if isinstance(db_client, Person):
+            if client_update.name:
+                db_client.name = client_update.name
+            if client_update.surname:
+                db_client.surname = client_update.surname
+            if client_update.address:
+                db_client.address = client_update.address
+        elif isinstance(db_client, Company):
+            if client_update.name:
+                db_client.name = client_update.name
+            if client_update.address:
+                db_client.address = client_update.address
+        db.commit()
+        db.refresh(db_client)
+        return db_client
+
+
+    @staticmethod
+    def delete(db: Session, client):
+        db.delete(client)
+        db.commit()
+        return client
+    
+    @staticmethod
+    def get_by_id(db: Session, client_id: int):
+        client = db.query(Client).filter(Client.id == client_id).first()
+        if client:
+            person = db.query(Person).filter(Person.id == client_id).first()
+            if person:
+                return person
+            company = db.query(Company).filter(Company.id == client_id).first()
+            if company:
+                return company
+        return None

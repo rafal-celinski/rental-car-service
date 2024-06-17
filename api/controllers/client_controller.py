@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from api.schemas.client_schema import Client, ClientCreate
+from api.schemas.client_schema import Client, ClientCreate, ClientUpdate
 from api.repositories.client_repository import ClientRepository
 from api.config import get_db
 
@@ -26,3 +26,17 @@ def create_client(client: ClientCreate, db: Session = Depends(get_db)):
 @router.get("/clients/", response_model=List[Client])
 def get_all_clients(db: Session = Depends(get_db)):
     return ClientRepository.get_all(db)
+
+@router.put("/clients/{client_id}", response_model=Client)
+def update_client(client_id: int, client_update: ClientUpdate, db: Session = Depends(get_db)):
+    db_client = ClientRepository.get_by_id(db, client_id)
+    if not db_client:
+        raise HTTPException(status_code=404, detail="Client not found")
+    return ClientRepository.update(db, db_client, client_update)
+
+@router.delete("/clients/{client_id}", response_model=Client)
+def delete_client(client_id: int, db: Session = Depends(get_db)):
+    db_client = ClientRepository.get_by_id(db, client_id)
+    if not db_client:
+        raise HTTPException(status_code=404, detail="Client not found")
+    return ClientRepository.delete(db, db_client)
