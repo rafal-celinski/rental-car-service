@@ -109,32 +109,50 @@ CREATE OR REPLACE TRIGGER invoice_price_trigger_on_delete
     EXECUTE FUNCTION set_invoice_price();
 
 -- Procedura generująca faktury.
-CREATE OR REPLACE PROCEDURE create_invoice(p_client_id INTEGER, p_start_date DATE, p_end_date DATE)
-    AS $$
-        DECLARE
-            v_rental_id INTEGER;
-            v_element_num INTEGER;
-            v_invoice_id INTEGER;
-        BEGIN
-            v_element_num := 1;
+create procedure create_invoice(IN p_client_id integer, IN p_start_date date, IN p_end_date date)
+    language plpgsql
+as
+$$
+DECLARE
+    v_rental_id INTEGER;
+    v_rental_price NUMERIC;
+    v_element_num INTEGER;
+    v_invoice_id INTEGER;
+    v_total_price NUMERIC := 0;
+    v_car_id INTEGER;
+BEGIN
+    v_element_num := 1;
 
-            INSERT INTO INVOICE (client_id, date)
-                VALUES (p_client_id, current_date)
-                RETURNING id INTO v_invoice_id;
+    FOR v_rental_id, v_rental_price IN
+        (SELECT id, price
+         FROM RENTAL
+         WHERE active = FALSE
+           AND client_id = p_client_id
+           AND end_date BETWEEN p_start_date AND p_end_date)
+        LOOP
+            v_total_price := v_total_price + v_rental_price;
+        END LOOP;
 
-            FOR v_rental_id
-                IN (select id
-                    from RENTAL
-                    where active = false
-                        and client_id = p_client_id
-                        and end_date between p_start_date and end_date)
-            LOOP
-                INSERT INTO INVOICE_ELEMENT (invoice_id, element_number, rental_id) VALUES
-                    (v_invoice_id, v_element_num, v_rental_id);
-                v_element_num := v_element_num + 1;
-            END LOOP;
+    IF v_total_price <= 0 THEN
+        RAISE EXCEPTION 'Total price for invoice must be greater than zero. Total price: %', v_total_price;
+    END IF;
 
-        END;
+    INSERT INTO INVOICE (client_id, date, price_sum_netto, tax)
+    VALUES (p_client_id, CURRENT_DATE, v_total_price, v_total_price * 0.08)
+    RETURNING id INTO v_invoice_id;
+
+    FOR v_rental_id, v_car_id, v_rental_price in
+        (SELECT id, car_id, price
+         FROM RENTAL
+         WHERE active = FALSE
+           AND client_id = p_client_id
+           AND end_date BETWEEN p_start_date AND p_end_date)
+        LOOP
+            INSERT INTO INVOICE_ELEMENT (invoice_id, element_number, rental_id,car_id, price)
+            VALUES (v_invoice_id, v_element_num, v_rental_id,v_car_id, v_rental_price);
+            v_element_num := v_element_num + 1;
+        END LOOP;
+END;
     $$ LANGUAGE plpgsql;
 
 
