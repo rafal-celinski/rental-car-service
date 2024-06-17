@@ -27,3 +27,5 @@ export const createClient = (clientData) => axios.post(`${API_URL}/clients/`, cl
 export const createOrUpdatePrice = (priceData) => axios.post(`${API_URL}/prices/`, priceData);
 export const deletePrice = (model_name, brand_name) => axios.delete(`${API_URL}/prices/${model_name}/${brand_name}`);
 export const getAllPrices = () => axios.get(`${API_URL}/prices/`);
+export const getMonthlyReport = (year, month) => {return axios.get(`${API_URL}/reports/monthly/`, {params: { year, month }});};
+export const getYearlyReport = (year) => { return axios.get(`${API_URL}/reports/yearly/`, {params: { year }});};
