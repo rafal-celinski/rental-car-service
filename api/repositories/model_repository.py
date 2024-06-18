@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from api.schemas.model_schema import CarModelCreate, CarModel
+from api.models.model import CarModel
+from api.schemas.model_schema import CarModelCreate
 
 class CarModelRepository:
 

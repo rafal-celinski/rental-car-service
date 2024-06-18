@@ -12,6 +12,8 @@ def create_car_model(car_model: CarModelCreate, db: Session = Depends(get_db)):
     return CarModelRepository.create(db, car_model)
 
 @router.get("/models/", response_model=List[CarModelSchema])
-def get_all_car_models(db: Session = Depends(get_db)):
-    car_models = CarModelRepository.get_all(db)
-    return [CarModelSchema.from_orm(car_model) for car_model in car_models]
+def get_all_models(db: Session = Depends(get_db)):
+    models = CarModelRepository.get_all(db)
+    if not models:
+        raise HTTPException(status_code=404, detail="No car models found")
+    return models
