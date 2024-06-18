@@ -1,0 +1,95 @@
+/* src/components/styles/Styles.css */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .logo {
+    max-width: 100px;
+    padding: 3px;
+    border: 3px solid #ddd;
+  }
+
+  .main-logo {
+    max-height: 50%;
+    padding: 20px;
+    border: 3px solid #333;
+    margin: 30px;
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin: 0 10px;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
+  main {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .car-container, .return-rental-container, .price-manager-container {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    max-width: 50%;
+    display: grid;
+    place-items: center;
+  }
+  
+  .car-container h2, .return-rental-container h2, .price-manager-container h2 {
+    margin-top: 0;
+  }
+  
+  .car-image, .return-rental-container .car-image, .price-manager-container .car-image {
+    background-color: white;
+    display: block;
+    margin-bottom: 10px;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .car-container button, .return-rental-container button, .price-manager-container button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .car-container button:disabled, .return-rental-container button:disabled, .price-manager-container button:disabled {
+    background-color: rgb(113, 114, 107);
+    cursor: not-allowed;
+  }
+  

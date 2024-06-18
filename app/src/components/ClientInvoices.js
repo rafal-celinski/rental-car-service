@@ -1,7 +1,8 @@
-// In src/components/ClientInvoices.js
+// src/components/ClientInvoices.js
 
 import React, { useState, useEffect } from 'react';
 import { getAllClients, getInvoicesByClient, getInvoiceElements } from '../services/api';
+import './styles/ClientInvoices.css';
 
 const ClientInvoices = () => {
   const [clientType, setClientType] = useState('person'); // 'person' or 'company'
@@ -51,40 +52,46 @@ const ClientInvoices = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Client Invoices</h2>
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
       <div>
-        <label>Client Type:</label>
-        <select value={clientType} onChange={(e) => setClientType(e.target.value)}>
+        <label className="label">Client Type:</label>
+        <select 
+          className="select"
+          value={clientType} 
+          onChange={(e) => setClientType(e.target.value)}>
           <option value="person">Person</option>
           <option value="company">Company</option>
         </select>
       </div>
       <div>
-        <label>{clientType === 'person' ? 'PESEL' : 'NIP'}:</label>
+        <label className="label">{clientType === 'person' ? 'PESEL' : 'NIP'}:</label>
         <input
+          className="input"
           type="text"
           value={clientIdentifier}
           onChange={(e) => setClientIdentifier(e.target.value)}
         />
-        <button onClick={handleFetchInvoices}>Fetch Invoices</button>
+        <button className="button" onClick={handleFetchInvoices}>Fetch Invoices</button>
       </div>
-      <ul>
+      <ul className="invoices-list">
         {invoices.map((invoice) => (
-          <li key={invoice.id}>
+          <li key={invoice.id} className="invoice-item">
             <p>Date: {invoice.date}</p>
             <p>Price Sum Netto: {invoice.price_sum_netto}</p>
             <p>Tax: {invoice.tax}</p>
-            <h4>Invoice Elements:</h4>
-            <ul>
-              {invoice.elements && invoice.elements.map((element) => (
-                <li key={element.id}>
-                  <p>Price: {element.price}</p>
-                  <p>Car: {element.car ? `${element.car.model_name} (${element.car.brand_name})` : 'Car details unavailable'}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="invoice-elements">
+              <h4>Invoice Elements:</h4>
+              <ul>
+                {invoice.elements && invoice.elements.map((element) => (
+                  <li key={element.id}>
+                    <p>Price: {element.price}</p>
+                    <p>Car: {element.car ? `${element.car.model_name} (${element.car.brand_name})` : 'Car details unavailable'}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </li>
         ))}
       </ul>

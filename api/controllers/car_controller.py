@@ -96,10 +96,26 @@ def get_cars(db: Session = Depends(get_db)):
 
 @router.get("/cars/{car_id}", response_model=Car)
 def get_car(car_id: int, db: Session = Depends(get_db)):
-    db_car = CarRepository.get(db, car_id)
-    if db_car is None:
+    car = CarRepository.get(db, car_id)
+    if car is None:
         raise HTTPException(status_code=404, detail="Car not found")
-    return db_car
+
+    photo_filename = car.photo.tobytes().decode('utf-8') if isinstance(car.photo, memoryview) else car.photo
+    photo_filename = remove_bom(photo_filename) if photo_filename else ""
+    photo_url = f"http://localhost:8000/api/images/{photo_filename}" if photo_filename else ""
+    response_car = Car(
+        id=car.id,
+        model_name=car.model_name,
+        brand_name=car.brand_name,
+        segment_name=car.segment_name,
+        production_date=car.production_date,
+        mileage=car.mileage,
+        license_plate=car.license_plate,
+        vin=car.vin,
+        photo=str(photo_url),  
+        is_rented=car.is_rented
+    )
+    return response_car
 
 @router.get("/images/{filename}")
 def get_image(filename: str):

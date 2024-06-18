@@ -3,30 +3,30 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, extract
 from typing import Dict
 from api.config import get_db
-from api.models.rental import Rental
+from api.models.invoice import Invoice
 
 router = APIRouter()
 
 @router.get("/reports/monthly/", response_model=Dict)
 def generate_monthly_report(year: int, month: int, db: Session = Depends(get_db)) -> Dict:
     try:
-        total_rentals = db.query(func.count(Rental.id)).filter(
-            extract('year', Rental.start_date) == year,
-            extract('month', Rental.start_date) == month
+        total_invoices = db.query(func.count(Invoice.id)).filter(
+            extract('year', Invoice.date) == year,
+            extract('month', Invoice.date) == month
         ).scalar() or 0
 
-        total_revenue = db.query(func.sum(Rental.price)).filter(
-            extract('year', Rental.start_date) == year,
-            extract('month', Rental.start_date) == month
+        total_revenue = db.query(func.sum(Invoice.price_sum_netto)).filter(
+            extract('year', Invoice.date) == year,
+            extract('month', Invoice.date) == month
         ).scalar() or 0.0
 
-        total_clients = db.query(func.count(func.distinct(Rental.client_id))).filter(
-            extract('year', Rental.start_date) == year,
-            extract('month', Rental.start_date) == month
+        total_clients = db.query(func.count(func.distinct(Invoice.client_id))).filter(
+            extract('year', Invoice.date) == year,
+            extract('month', Invoice.date) == month
         ).scalar() or 0
 
         return {
-            "total_rentals": total_rentals,
+            "total_invoices": total_invoices,
             "total_revenue": total_revenue,
             "total_clients": total_clients
         }
@@ -36,20 +36,20 @@ def generate_monthly_report(year: int, month: int, db: Session = Depends(get_db)
 @router.get("/reports/yearly/", response_model=Dict)
 def generate_yearly_report(year: int, db: Session = Depends(get_db)) -> Dict:
     try:
-        total_rentals = db.query(func.count(Rental.id)).filter(
-            extract('year', Rental.start_date) == year
+        total_invoices = db.query(func.count(Invoice.id)).filter(
+            extract('year', Invoice.date) == year
         ).scalar() or 0
 
-        total_revenue = db.query(func.sum(Rental.price)).filter(
-            extract('year', Rental.start_date) == year
+        total_revenue = db.query(func.sum(Invoice.price_sum_netto)).filter(
+            extract('year', Invoice.date) == year
         ).scalar() or 0.0
 
-        total_clients = db.query(func.count(func.distinct(Rental.client_id))).filter(
-            extract('year', Rental.start_date) == year
+        total_clients = db.query(func.count(func.distinct(Invoice.client_id))).filter(
+            extract('year', Invoice.date) == year
         ).scalar() or 0
 
         return {
-            "total_rentals": total_rentals,
+            "total_invoices": total_invoices,
             "total_revenue": total_revenue,
             "total_clients": total_clients
         }

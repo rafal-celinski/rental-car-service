@@ -1,0 +1,97 @@
+/* src/components/styles/PriceManager.css */
+
+.price-manager-container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .price-manager-container h2,
+  .price-manager-container h3 {
+    text-align: center;
+    width:80%;
+  }
+  
+  .price-manager-form {
+    margin-top: 20px;
+    width:80%;
+  }
+  
+  .price-manager-form div {
+    margin-bottom: 15px;
+  }
+  
+  .price-manager-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .price-manager-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .price-manager-form button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .price-manager-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .price-manager-list ul {
+    list-style: none;
+    padding: 0;
+    
+  }
+  
+  .price-manager-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  
+  .price-manager-list li button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin:10px;
+  }
+  
+  .price-manager-list li button:hover {
+    background-color: #c82333;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+  }
+  
+  .success-message {
+    color: green;
+    text-align: center;
+  }
+  

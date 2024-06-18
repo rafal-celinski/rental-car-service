@@ -1,0 +1,46 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.main-container {
+  padding: 30px;
+  border: 5px solid #ddd;
+}
+
+.car-container {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  max-width: 30%;
+  margin: 0 auto;
+}
+
+.car-container h2 {
+  margin-top: 0;
+}
+
+.car-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.car-container button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.car-container button:disabled {
+  background-color: rgb(113, 114, 107);
+  cursor: not-allowed;
+}

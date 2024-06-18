@@ -1,0 +1,67 @@
+/* src/components/styles/ClientManagement.css */
+
+.client-management-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .client-management-container h2 {
+    text-align: center;
+  }
+  
+  .client-management-form,
+  .client-management-list {
+    margin-top: 20px;
+  }
+  
+  .client-management-form input,
+  .client-management-list input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .client-management-form button,
+  .client-management-list button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .client-management-form button:hover,
+  .client-management-list button:hover {
+    background-color: #0056b3;
+  }
+  
+  .client-management-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .client-management-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .client-management-list li p {
+    margin: 0;
+    flex-grow: 1;
+  }
+  

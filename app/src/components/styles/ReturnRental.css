@@ -1,0 +1,54 @@
+/* src/components/styles/ReturnRentalPage.css */
+.return-rental-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .client-search {
+    margin-bottom: 15px;
+  }
+  
+  .rental-details {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .car-container {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    max-width: 100%;
+  }
+  
+  .car-container h2 {
+    margin-top: 0;
+  }
+  
+  .car-image {
+    background-color: white;
+    display: block;
+    margin-bottom: 10px;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .car-container button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .car-container button:disabled {
+    background-color: rgb(113, 114, 107);
+    cursor: not-allowed;
+  }
+  

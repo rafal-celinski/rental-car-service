@@ -1,6 +1,8 @@
+// src/components/AddCar.js
+
 import React, { useState, useEffect } from 'react';
 import { addCar, getAvailableModels } from '../services/api';
-
+import './styles/AddCar.css';
 const AddCar = () => {
   const [carData, setCarData] = useState({
     model_name: '',
@@ -39,7 +41,6 @@ const AddCar = () => {
     const segment = e.target.value;
     setCarData({ ...carData, segment_name: segment, brand_name: '', model_name: '' });
 
-    // Filter brands based on selected segment
     const uniqueBrands = [...new Set(models.filter(model => model.segment_name === segment).map(model => model.brand_name))];
     setBrands(uniqueBrands);
     setFilteredModels([]);
@@ -49,7 +50,6 @@ const AddCar = () => {
     const brand = e.target.value;
     setCarData({ ...carData, brand_name: brand, model_name: '' });
 
-    // Filter models based on selected segment and brand
     const availableModels = models.filter(model => model.segment_name === carData.segment_name && model.brand_name === brand);
     setFilteredModels(availableModels);
   };
