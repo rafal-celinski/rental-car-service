@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import func, extract
 from typing import Dict
-from api.config import get_db
-from api.models.invoice import Invoice
+from config import get_db
+from models.invoice import Invoice
 
 router = APIRouter()
 

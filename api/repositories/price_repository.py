@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from api.models.price_list import Price
-from api.schemas.price_schema import PriceCreate, PriceUpdate
+from models.price_list import Price
+from schemas.price_schema import PriceCreate, PriceUpdate
 
 class PriceRepository:
     @staticmethod

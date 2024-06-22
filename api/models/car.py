@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, Boolean
 from sqlalchemy.orm import relationship
-from api.config import Base
+from config import Base
 
 
 class Car(Base):

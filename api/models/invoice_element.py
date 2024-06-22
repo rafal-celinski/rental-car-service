@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey, Numeric
 from sqlalchemy.orm import relationship
-from api.config import Base
+from config import Base
 
 
 class InvoiceElement(Base):

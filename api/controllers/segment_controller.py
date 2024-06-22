@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from api.schemas.segment_schema import Segment, SegmentCreate
-from api.repositories.segment_repository import SegmentRepository
-from api.config import get_db
+from schemas.segment_schema import Segment, SegmentCreate
+from repositories.segment_repository import SegmentRepository
+from config import get_db
 
 router = APIRouter()
 

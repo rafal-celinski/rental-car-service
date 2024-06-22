@@ -1,10 +1,22 @@
 version: '3.8'
 
 services:
-  database:
-    extends:
-      file: database/docker-compose.yml
-      service: postgres
+  backend:
+    build:
+      context: ./api
+    container_name: backend
+    environment:
+      - SQLALCHEMY_DATABASE_URL
+    volumes:
+      - ./uploads:/uploads
+    ports:
+      - "8000:8000"
 
-volumes:
-  postgres_data:
+  frontend:
+    build:
+      context: ./app
+    container_name: frontend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from api.models.segment import Segment
-from api.schemas.segment_schema import SegmentCreate
+from models.segment import Segment
+from schemas.segment_schema import SegmentCreate
 
 class SegmentRepository:
 

@@ -1,23 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.controllers.client_controller import router as client_router
-from api.controllers.car_controller import router as car_router
-from api.controllers.rental_controller import router as rental_router
-from api.controllers.price_controller import router as price_router
-from api.controllers.report_controller import router as report_router
-from api.controllers.invoice_controller import router as invoice_router
-from api.controllers.brand_controller import router as brand_router
-from api.controllers.model_controller import router as model_router
-from api.controllers.segment_controller import router as segment_router
-from api.config import engine
-from api.models import client, car, rental, price_list, invoice, invoice_element, brand, model, segment
+from controllers.client_controller import router as client_router
+from controllers.car_controller import router as car_router
+from controllers.rental_controller import router as rental_router
+from controllers.price_controller import router as price_router
+from controllers.report_controller import router as report_router
+from controllers.invoice_controller import router as invoice_router
+from controllers.brand_controller import router as brand_router
+from controllers.model_controller import router as model_router
+from controllers.segment_controller import router as segment_router
+from config import engine
+from models import client, car, rental, price_list, invoice, invoice_element, brand, model, segment
 
 app = FastAPI()
 
 # Configure CORS
 origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000",
 ]
 
 app.add_middleware(

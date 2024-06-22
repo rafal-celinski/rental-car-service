@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Date, ForeignKey, Boolean, Numeric
 from sqlalchemy.orm import relationship
-from api.config import Base
+from config import Base
 
 
 class Rental(Base):

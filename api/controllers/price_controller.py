@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from api.schemas.price_schema import Price, PriceCreate, PriceUpdate
-from api.repositories.price_repository import PriceRepository
-from api.config import get_db
+from schemas.price_schema import Price, PriceCreate, PriceUpdate
+from repositories.price_repository import PriceRepository
+from config import get_db
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from api.models.client import Person, Company, Client
-from api.schemas.client_schema import Client as ClientSchema, ClientCreate, ClientUpdate
+from models.client import Person, Company, Client
+from schemas.client_schema import Client as ClientSchema, ClientCreate, ClientUpdate
 
 class ClientRepository:
 

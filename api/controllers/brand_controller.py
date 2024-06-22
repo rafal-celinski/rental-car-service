@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from api.schemas.brand_schema import Brand, BrandCreate
-from api.repositories.brand_repository import BrandRepository
-from api.config import get_db
+from schemas.brand_schema import Brand, BrandCreate
+from repositories.brand_repository import BrandRepository
+from config import get_db
 
 router = APIRouter()
 

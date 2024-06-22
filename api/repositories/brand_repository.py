@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from api.models.brand import Brand
-from api.schemas.brand_schema import BrandCreate
+from models.brand import Brand
+from schemas.brand_schema import BrandCreate
 
 class BrandRepository:
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from api.schemas.invoice_schema import Invoice, InvoiceCreate, InvoiceElement
-from api.repositories.invoice_repository import InvoiceRepository
-from api.config import get_db
+from schemas.invoice_schema import Invoice, InvoiceCreate, InvoiceElement
+from repositories.invoice_repository import InvoiceRepository
+from config import get_db
 from typing import List
 from sqlalchemy import text
 

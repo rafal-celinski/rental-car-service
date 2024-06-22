@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from api.models.rental import Rental
-from api.schemas.rental_schema import RentalCreate, RentalUpdate
+from models.rental import Rental
+from schemas.rental_schema import RentalCreate, RentalUpdate
 
 class RentalRepository:
 

@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 from sqlalchemy.exc import SQLAlchemyError
-from api.schemas.rental_schema import Rental, RentalCreate
-from api.repositories.rental_repository import RentalRepository
-from api.config import get_db
+from schemas.rental_schema import Rental, RentalCreate
+from repositories.rental_repository import RentalRepository
+from config import get_db
 from typing import List
 
 router = APIRouter()

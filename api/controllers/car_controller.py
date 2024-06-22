@@ -3,16 +3,16 @@ from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
-from api.schemas.car_schema import Car, CarCreate
-from api.models.car import Car as CarModel
-from api.repositories.car_repository import CarRepository
-from api.config import get_db
+from schemas.car_schema import Car, CarCreate
+from models.car import Car as CarModel
+from repositories.car_repository import CarRepository
+from config import get_db
 import shutil 
 import os
 
 router = APIRouter()
 
-UPLOAD_DIR = "uploads"
+UPLOAD_DIR = "/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 def remove_bom(text):
@@ -54,7 +54,7 @@ def create_car(
     db.commit()
     db.refresh(db_car)
 
-    # Explicitly convert photo to string in the response
+
     response_car = Car(
         id=db_car.id,
         model_name=db_car.model_name,

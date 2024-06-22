@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from api.models import Invoice, InvoiceElement, Car
+from models import Invoice, InvoiceElement, Car
 from typing import List
 
 class InvoiceRepository:
