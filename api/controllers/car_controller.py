@@ -12,7 +12,7 @@ import os
 
 router = APIRouter()
 
-UPLOAD_DIR = "/uploads"
+UPLOAD_DIR = ("../uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 def remove_bom(text):
@@ -32,7 +32,7 @@ def create_car(
     photo: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
-    # Save the uploaded photo file
+
     photo_path = os.path.join(UPLOAD_DIR, photo.filename)
     with open(photo_path, "wb") as buffer:
         shutil.copyfileobj(photo.file, buffer)
