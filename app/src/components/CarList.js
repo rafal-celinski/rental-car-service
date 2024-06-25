@@ -1,7 +1,6 @@
-// src/components/CarList.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCars } from '../services/api';
+import { getCars, editCar, deleteCar } from '../services/api';
 import './styles/CarList.css'; // Ensure your global styles are imported
 
 const CarList = () => {
@@ -25,6 +24,40 @@ const CarList = () => {
     navigate(`/rent-car/${carId}`);
   };
 
+  const handleEdit = (carId) => {
+    const newMileage = prompt("Enter new mileage:");
+    const newLicensePlate = prompt("Enter new license plate:");
+    const newVin = prompt("Enter new VIN:");
+
+    if (newMileage && newLicensePlate && newVin) {
+      const updatedCar = {
+        mileage: parseInt(newMileage),
+        license_plate: newLicensePlate,
+        vin: newVin
+      };
+
+      editCar(carId, updatedCar)
+        .then(() => {
+          setCars((prevCars) => prevCars.map((car) => (car.id === carId ? { ...car, ...updatedCar } : car)));
+        })
+        .catch((error) => {
+          console.error('Error updating car:', error);
+        });
+    }
+  };
+
+  const handleDelete = (carId) => {
+    if (window.confirm('Are you sure you want to delete this car?')) {
+      deleteCar(carId)
+        .then(() => {
+          setCars((prevCars) => prevCars.filter((car) => car.id !== carId));
+        })
+        .catch((error) => {
+          console.error('Error deleting car:', error);
+        });
+    }
+  };
+
   return (
     <div className="main-container">
       {cars.map((car) => (
@@ -36,11 +69,19 @@ const CarList = () => {
           <p>Mileage: {car.mileage}</p>
           <p>License Plate: {car.license_plate}</p>
           <p>VIN: {car.vin}</p>
+          <div class="button-container">
           {car.is_rented ? (
             <button disabled>Car currently rented</button>
           ) : (
             <button onClick={() => handleRent(car.id)}>Rent this Car</button>
-          )}
+          ) }
+          <button onClick={() => handleEdit(car.id)}>Edit</button>
+          {car.is_rented ? (
+          <button disabled>Cannot delete</button>
+          ) : 
+           (<button onClick={() => handleDelete(car.id)}>Delete</button>)
+          }
+          </div>
         </div>
       ))}
     </div>

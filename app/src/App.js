@@ -11,6 +11,7 @@ import GenerateInvoice from './components/GenerateInvoice';
 import PriceManager from './components/PriceManager';
 import { MonthlyReportPage, YearlyReportPage } from './components/Report';
 import ClientManagement from './components/ClientManagement';
+import RentalStats from './components/RentalStats';
 import './components/styles/App.css';
 import logo from './components/images/logo.png';
 
@@ -33,6 +34,7 @@ const App = () => {
               <li><Link to="/monthly-report">Monthly Report</Link></li>
               <li><Link to="/yearly-report">Yearly Report</Link></li>
               <li><Link to="/client-management">Client Management</Link></li>
+              <li><Link to="/rental-stats">Rental Stats</Link></li>
             </ul>
           </nav>
 
@@ -49,6 +51,7 @@ const App = () => {
             <Route path="/monthly-report" element={<MonthlyReportPage />} />
             <Route path="/yearly-report" element={<YearlyReportPage />} />
             <Route path="/client-management" element={<ClientManagement />} />
+            <Route path="/rental-stats" element={<RentalStats />} />
           </Routes>
           <img src={logo} alt="Company Logo" className="main-logo" />
         </main>

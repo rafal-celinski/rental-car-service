@@ -32,3 +32,6 @@ export const getYearlyReport = (year) => { return axios.get(`${API_URL}/reports/
 export const updateClient = (clientId, clientData) => axios.put(`${API_URL}/clients/${clientId}`, clientData);
 export const deleteClient = (clientId) => axios.delete(`${API_URL}/clients/${clientId}`);
 export const createCarModel = (carModel) => axios.post(`${API_URL}/models/`, carModel);
+export const editCar = (carId, carData) => axios.put(`${API_URL}/cars/${carId}`, carData);
+export const deleteCar = (carId) => axios.delete(`${API_URL}/cars/${carId}`);
+export const getCarRentalStats = () => axios.get(`${API_URL}/reports/car_rentals/`);

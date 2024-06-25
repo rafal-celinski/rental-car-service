@@ -6,6 +6,7 @@ class Client(Base):
     __tablename__ = 'client'
     id = Column(Integer, primary_key=True, index=True)
     address = Column(String)
+    rentals = relationship("Rental", back_populates="client")
 
 class Person(Client):
     __tablename__ = 'person'

@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import date
-from schemas.car_schema import Car, CarCreate
+from schemas.car_schema import Car, CarUpdate
 from models.car import Car as CarModel
 from repositories.car_repository import CarRepository
 from config import get_db
@@ -124,3 +124,44 @@ def get_image(filename: str):
         return FileResponse(file_path)
     else:
         raise HTTPException(status_code=404, detail="Image not found")
+
+@router.put("/cars/{car_id}", response_model=Car)
+def update_car(
+    car_id: int,
+    car_update: CarUpdate,
+    db: Session = Depends(get_db)
+):
+    car = db.query(CarModel).filter(CarModel.id == car_id).first()
+    if not car:
+        raise HTTPException(status_code=404, detail="Car not found")
+
+    for key, value in car_update.dict(exclude_unset=True).items():
+        if key in ["mileage", "license_plate", "vin", "photo"]:
+            setattr(car, key, value)
+
+    response_car = Car(
+        id=car.id,
+        model_name=car.model_name,
+        brand_name=car.brand_name,
+        segment_name=car.segment_name,
+        production_date=car.production_date,
+        mileage=car.mileage,
+        license_plate=car.license_plate,
+        vin=car.vin,
+        photo = car.photo.tobytes().decode('utf-8') if isinstance(car.photo, memoryview) else car.photo,  
+        is_rented=car.is_rented
+    )
+
+    db.commit()
+    db.refresh(car)
+    return response_car
+
+@router.delete("/cars/{car_id}", response_model=dict)
+def delete_car(car_id: int, db: Session = Depends(get_db)):
+    db_car = db.query(CarModel).filter(CarModel.id == car_id).first()
+    if not db_car:
+        raise HTTPException(status_code=404, detail="Car not found")
+
+    db.delete(db_car)
+    db.commit()
+    return {"message": "Car deleted successfully"}
